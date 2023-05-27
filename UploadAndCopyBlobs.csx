@@ -9,13 +9,8 @@ await Main();
 
 async Task Main()
 {
-    // string connectionStringA = Environment.GetEnvironmentVariable("CONNECTION_STRING_A");
-    // string connectionStringB = Environment.GetEnvironmentVariable("CONNECTION_STRING_B");
     string connectionStringA = Environment.GetCommandLineArgs()[2];
     string connectionStringB = Environment.GetCommandLineArgs()[3];
-
-    Console.WriteLine("string A: " + connectionStringA);
-    Console.WriteLine("string B: " + connectionStringB);
 
     BlobContainerClient storageContainerA = CreateStorageContainer(connectionStringA);
     BlobContainerClient storageContainerB = CreateStorageContainer(connectionStringB);
@@ -43,7 +38,7 @@ static async Task UploadBlobsToContainerAsync(BlobContainerClient storageContain
     var tasks = Enumerable.Range(1, 100).Select((i) =>
     {
         BlobClient blobClient = storageContainerA.GetBlobClient($"Blob{i}");
-        return blobClient.UploadAsync(BinaryData.FromString($"Hello, I'm Blob #{i}!"), true);
+        return blobClient.UploadAsync(BinaryData.FromString($"Hello! I'm Blob #{i}!"), true);
     });
 
     await Task.WhenAll(tasks).ContinueWith((b) => Console.WriteLine("Done!"));
